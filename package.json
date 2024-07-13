@@ -1,0 +1,27 @@
+{
+  "name": "webrtc-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moses1998lee/webrtc-stream.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moses1998lee/webrtc-stream/issues"
+  },
+  "homepage": "https://github.com/moses1998lee/webrtc-stream#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.7.0"
+  }
+}
