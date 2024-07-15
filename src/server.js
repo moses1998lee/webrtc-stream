@@ -1,29 +1,23 @@
-// server.js
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const path = require('path');
-
-// Create an Express application
-const app = express();
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, '../public')));
-
-// Create an HTTP server
-const server = http.createServer(app);
-
-// Attach Socket.io to the HTTP server
-const io = socketIo(server);
-
-// Import the websocket configuration from websocket.js
 const setupWebSocket = require('./websocket');
+const helmet = require('helmet');
 
-// Initialize WebSocket with the setup function
+const app = express();
+app.use(helmet()); // Security best practices
+const server = http.createServer(app);
+const io = socketIo(server, {
+    cors: {
+        origin: "https://yourdomain.com",
+        methods: ["GET", "POST"]
+    }
+});
+
+app.use(express.static(path.join(__dirname, '../public')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../public/index.html')));
 setupWebSocket(io);
 
-// Start the server
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

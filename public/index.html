@@ -1,24 +1,25 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WebSocket Test</title>
+    <title>Real-Time Video Chat</title>
+    <link rel="stylesheet" href="css/styles.css">
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const socket = io();  // Connect to the WebSocket server
-
-            socket.on('welcome', function(message) {
-                const div = document.createElement('div');
-                div.textContent = message;
-                document.body.appendChild(div);
-            });
-        });
-    </script>
+    <script src="js/client.js"></script>
 </head>
 <body>
-    <h1>WebSocket Client</h1>
-    <div>Check the console for messages from the server.</div>
+    <div class="main-container">
+        <header>
+            <h1>Video Chat App</h1>
+        </header>
+        <div class="video-container">
+            <video id="localVideo" autoplay playsinline muted></video>
+            <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+        <div class="controls">
+            <button id="startButton">Start Video Chat</button>
+            <p id="status">Not sharing</p>
+        </div>
+    </div>
 </body>
 </html>
