@@ -1,11 +1,14 @@
-// client.js located in /public/js
 document.addEventListener('DOMContentLoaded', () => {
     const localVideo = document.getElementById('localVideo');
     const remoteVideo = document.getElementById('remoteVideo');
+    const toggleCameraButton = document.getElementById('toggleCamera');
     const socket = io();
+    let localStream = null;
+    let cameraEnabled = true;
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
         .then(stream => {
+            localStream = stream;
             localVideo.srcObject = stream;
             const peerConnection = new RTCPeerConnection();
 
@@ -24,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         peerConnection.setLocalDescription(answer);
                         socket.emit('answer', answer, senderId);
                     });
-                
+
                 peerConnection.onicecandidate = event => {
                     if (event.candidate) {
                         socket.emit('candidate', event.candidate, senderId);
@@ -38,6 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             socket.on('candidate', candidate => {
                 peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+            });
+
+            // Toggle camera functionality
+            toggleCameraButton.addEventListener('click', () => {
+                if (!localStream) return;
+
+                const videoTrack = localStream.getVideoTracks()[0];
+                if (videoTrack) {
+                    cameraEnabled = !cameraEnabled;
+                    videoTrack.enabled = cameraEnabled;
+                    toggleCameraButton.textContent = cameraEnabled ? "Turn Camera Off" : "Turn Camera On";
+                }
             });
         })
         .catch(error => {

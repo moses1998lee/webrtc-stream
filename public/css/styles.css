@@ -43,8 +43,15 @@ video {
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #fff;
-    background: #06D85F;
+    padding: 10px;
+    margin-top: 5px;
+    color: white;
+    background-color: #007BFF;
     border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
